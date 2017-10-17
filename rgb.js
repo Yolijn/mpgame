@@ -20,4 +20,9 @@ class RGB {
 	}
 }
 
+/*
+	This is a module for creating and saving RGB values
+	translating them to a string
+	creating a random rgb instance
+*/
 module.exports = RGB;
