@@ -27,7 +27,7 @@ class Matrix2 {
 				const items = col.map((value, y) => {
 					return {
 						coordinate: new Vector2(x, y),
-						value: this.initialValue
+						value:      this.initialValue
 					}
 				});
 

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint **/**.js **.js --fix"
   },
   "author": "",
   "license": "ISC",
@@ -12,5 +13,8 @@
     "express": "^4.16.1",
     "rxjs": "^5.4.3",
     "socket.io": "^2.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.9.0"
   }
 }

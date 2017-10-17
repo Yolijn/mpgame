@@ -1,4 +1,6 @@
 'use strict';
+/*eslint no-undef: "off"*/
+/*eslint no-console: "off"*/
 
 function Game() {
 	this.canvas = document.getElementById('game');
@@ -72,6 +74,6 @@ function init() {
 }
 
 // Make sure to start after the DOM content is fully loaded
-document.addEventListener('DOMContentLoaded', function (event) {
+document.addEventListener('DOMContentLoaded', function () {
 	init();
 });
