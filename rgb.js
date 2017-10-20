@@ -10,13 +10,13 @@ function isRGBValue(value) {
 
 class RGB {
     constructor(r, g, b) {
-        this.r = isRGBValue(r) ? r : randomRGBValue();
-        this.g = isRGBValue(g) ? g : randomRGBValue();
-        this.b = isRGBValue(b) ? b : randomRGBValue();
+        this.red = isRGBValue(r) ? r : randomRGBValue();
+        this.green = isRGBValue(g) ? g : randomRGBValue();
+        this.blue = isRGBValue(b) ? b : randomRGBValue();
     }
 
     toString() {
-        return `rgb(${r}, ${g}, ${b })`;
+        return `rgb(${this.red}, ${this.green}, ${this.blue})`;
     }
 }
 

@@ -51,8 +51,8 @@ class Matrix2 {
             One with the row length and another with the column length
             fill both explicitely with null for use with map/filter/reduce
         */
-        const row = new Array(this.dimension.x).fill(null),
-              column = new Array(this.dimension.y).fill(null);
+        const column = new Array(this.dimension.y).fill(null),
+              row = new Array(this.dimension.x).fill(null);
 
         // Fill each position (x) in the row with a column (y)
         this.matrix = row.map((_empty, x) => {
@@ -87,7 +87,7 @@ class Matrix2 {
             // TODO: handle multiple results elegantly
             .reduce((result, value) => {
                 if (result && value) {
-                    console.war(`Unexpected: Multiple results for coordinate [${coordinate.x}, ${coordinate.y}]`);
+                    throw new Error(`Unexpected: Multiple results for coordinate [${coordinate.x}, ${coordinate.y}]`);
                 }
 
                 return value;
@@ -115,7 +115,7 @@ class Matrix2 {
 
         } else if (result.length < 1) {
 
-            console.warn(`Could not find coordinate [${coordinate.x}, ${coordinate.y}], value is not set`)
+            throw new Error(`Could not find coordinate [${coordinate.x}, ${coordinate.y}], value is not set`);
 
         } else {
             result[0].value = value;

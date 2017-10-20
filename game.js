@@ -70,7 +70,6 @@ function directionToVector2(direction) {
 		return new Vector2(1, 0);
 
 	} else {
-		console.warn(`Can't find direction ${direction}`)
 		return;
 	}
 }

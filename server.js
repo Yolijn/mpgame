@@ -1,16 +1,16 @@
-const express = require('express'),
-	  Rx = require('rxjs/Rx'),
-	  http = require('http'),
-	  socketIo = require('socket.io'),
-	  path = require('path'),
-	  settings = require('./settings.json'),
-	  { GridGame, directionToVector2 } = require('./game.js');
+const Rx = require('rxjs/Rx'),
+      express = require('express'),
+      http = require('http'),
+      path = require('path'),
+      settings = require('./settings.json'),
+      socketIo = require('socket.io'),
+      { GridGame, directionToVector2 } = require('./game.js');
 
-const currentGame = new GridGame(settings),
-	  port = process.env.PORT || 3000,
-	  app = express(),
-	  httpServer = http.Server(app),
-	  socketServer = socketIo(httpServer);
+const app = express(),
+      currentGame = new GridGame(settings),
+      httpServer = http.Server(app),
+      port = process.env.PORT || 3000,
+      socketServer = socketIo(httpServer);
 
 // Listen for connections on the http server and create a socket for each connection
 const connections = Rx.Observable.fromEvent(socketServer, 'connection');
@@ -73,5 +73,5 @@ app.use('/Rx.js', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'node_modules/rxjs/bundles', 'Rx.min.js'));
 });
 
-// eslint no-console: "off"
+/* eslint no-console: "off" */
 httpServer.listen(port, () => console.log(`listening on http://localhost:${port}/`));
