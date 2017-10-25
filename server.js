@@ -19,7 +19,7 @@ const connections = Rx.Observable.fromEvent(socketServer, 'connection');
 const newPlayers = connections.do(socket => {
 
     // In the future we'll be able to split groups of connections into multiple rooms
-    socket.join('game');
+    // socket.join('game');
 });
 
 // Create an observable for all move events fired on a client socket connection
@@ -39,10 +39,10 @@ newPlayers.subscribe(socket => {
     currentGame.addPlayer(socket.id);
 
     // Let the connected socket know it is now connected by sending it the 'connected' event
-    socket.emit('connected', currentGame);
+    socket.emit('connected', settings);
 
-    // Let all players in the 'game' room know the game is updated and send the new game status
-    socket.to('game').emit('update', currentGame);
+    // Let all players in the 'game' room know te game is updated and send the new game status
+    socketServer.sockets.emit('updatedGrid', currentGame);
 });
 
 // When a move event is emitted
