@@ -3,7 +3,6 @@
 /*eslint no-console: "off"*/
 
 function rgbToString(rgb) {
-    console.log('rgbToString', rgb);
     return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
 }
 
