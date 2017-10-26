@@ -29,24 +29,25 @@ class GridGame {
 
 	movePlayer(id, direction) {
 		const oldCoordinate = this.players[id].position;
-		const newCoordinate = Vector2.add(oldCoordinate, direction);
+        const directionV2 = directionToVector2(direction);
+		const newCoordinate = Vector2.add(oldCoordinate, directionV2);
+        const player = this.players[id];
 
 		if (this.grid.exists(newCoordinate)) {
-			const player = this.grid.get(newCoordinate).value;
 
-			this.players[id].position = newCoordinate;
+            this.grid.reset(oldCoordinate);
+            player.position = newCoordinate;
+            this.grid.set(newCoordinate, player);
 
-			this.grid.reset(oldCoordinate);
-			this.grid.set(newCoordinate, player);
 		} else {
-			// TODO: Do something when new coordinate doesn't exist after adding direction
+
+            // TODO: Do something when new coordinate doesn't exist after adding direction
+            console.log(`coordinate ${newCoordinate} doesn't exist`);
 		}
 	}
 
 	removePlayer(id) {
-		const coordinate = this.players[id].position;
-
-		this.grid.reset(coordinate);
+		this.grid.reset(this.players[id].position);
 		delete this.players[id];
 	}
 }
