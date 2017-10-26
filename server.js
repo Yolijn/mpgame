@@ -4,7 +4,7 @@ const Rx = require('rxjs/Rx'),
       path = require('path'),
       settings = require('./settings.json'),
       socketIo = require('socket.io'),
-      { GridGame, directionToVector2 } = require('./game.js');
+      { GridGame } = require('./game.js');
 
 const app = express(),
       currentGame = new GridGame(settings),
