@@ -16,11 +16,14 @@ const app = express(),
 const connections = Rx.Observable.fromEvent(socketServer, 'connection');
 
 // Create an observable for all connections and let each connection join the 'game' room
+// Use share to multicast for eventStreams based on these sockets
 const newPlayers = connections.do(socket => {
-
     // In the future we'll be able to split groups of connections into multiple rooms
     socket.join('game');
-});
+
+     // Let the connected socket know it is now connected by sending it the 'connected' event
+    socket.emit('connected', settings);
+}).share();
 
 // Create an observable for all move events fired on a client socket connection
 const moveEvents = newPlayers.flatMap(socket => {
