@@ -35,31 +35,29 @@ const disconnectEvents = newPlayers.flatMap(socket => {
     return Rx.Observable.fromEvent(socket, 'disconnect', () => socket)
 });
 
+// Send current game status to all players in a room
+const sendUpdateTo = (room) => {
+    socketServer.in(room).emit('update', currentGame);
+}
+
 // For each socket connection in the newPlayers observable
 newPlayers.subscribe(socket => {
 
     // Add player with the unique socket id to the game
     currentGame.addPlayer(socket.id);
 
-    // Let the connected socket know it is now connected by sending it the 'connected' event
-    socket.emit('connected', settings);
-
-    // Send the connected socket the most recent game information
-    // TODO: Send the new player and all other players in the game room the update at once
-    socket.emit('update', currentGame);
-
-    // Let all other players in the 'game' room know te game is updated and send the new game status
-    socket.to('game').emit('update', currentGame);
+    //Send the new player and all other players in the game room the most recent game
+    sendUpdateTo('game');
 });
 
 // When a move event is emitted
 moveEvents.subscribe(([socket, direction]) => {
 
     // Move the player with the socket.id send with the move event
-    currentGame.movePlayer(socket.id, directionToVector2(direction));
+    currentGame.movePlayer(socket.id, direction);
 
-    // Let all players in the 'game' room know the game is updated and send the new game status
-    socket.in('game').emit('update', currentGame);
+    //Send the new player and all other players in the game room the most recent game
+    sendUpdateTo('game');
 });
 
 // When a disconnected event is emitted
@@ -68,8 +66,8 @@ disconnectEvents.subscribe(socket => {
     // Remove the player with the socket.id send with the disconnect event
     currentGame.removePlayer(socket.id);
 
-    // Let all other players in the 'game' room know the game is updated and send the new game status
-    socket.to('game').emit('update', currentGame);
+    //Send the new player and all other players in the game room the most recent game
+    sendUpdateTo('game');
 });
 
 // Make all files in the public folder available at localhost:PORT/...
