@@ -41,8 +41,15 @@ Game.prototype.init = function (socket, settings) {
 // Works only after Game.init(grid) has run
 Game.prototype.draw = function(state) {
 
-    var ctx = this.ctx,
-        cellSize = this.cellSize;
+    function drawPlayer(player) {
+        this.ctx.fillStyle = rgbToString(player.color);
+        this.ctx.fillRect(
+            player.position.x * this.cellSize.x,
+            player.position.y * this.cellSize.y,
+            this.cellSize.x,
+            this.cellSize.y
+        );
+    }
 
     this.active = state.grid.matrix.filter(function(item) {
         return item.value;
@@ -50,15 +57,8 @@ Game.prototype.draw = function(state) {
         return item.value
     });
 
-    this.active.forEach(function(item) {
-        ctx.fillStyle = rgbToString(item.color);
-        ctx.fillRect(
-            item.position.x * cellSize.x,
-            item.position.y * cellSize.y,
-            cellSize.x,
-            cellSize.y
-        );
-    })
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.active.forEach(drawPlayer.bind(this));
 }
 
 /** This function will run after the DOMContentLoaded event is detected */
