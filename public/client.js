@@ -18,7 +18,7 @@ function Game() {
 Game.prototype.init = function (socket, settings) {
 
     var keyUpEvents$ = Rx.Observable.fromEvent(document, 'keyup');
-    var grid$ = new Rx.Observable.fromEvent(socket, 'updatedGrid');
+    var grid$ = new Rx.Observable.fromEvent(socket, 'update');
     var moveEvent$ = keyUpEvents$.filter(function(event) {
         return /^Arrow(Up|Down|Left|Right)$/.test(event.key);
     });
