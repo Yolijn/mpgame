@@ -34,7 +34,7 @@ function Game() {
  */
 Game.prototype.init = function (socket, settings) {
     var keyUpEvents$ = Rx.Observable.fromEvent(document, 'keyup');
-    var grid$ = new Rx.Observable.fromEvent(socket, 'update');
+    var game$ = new Rx.Observable.fromEvent(socket, 'update');
 
     /* Filter keyEvents to match only Arrow Up, Down, Left and Right */
     var moveEvent$ = keyUpEvents$.filter(function(event) {
@@ -54,7 +54,8 @@ Game.prototype.init = function (socket, settings) {
         socket.emit('move', direction);
     });
 
-    this.grid = grid$.subscribe(this.draw.bind(this));
+    /* Call the game.draw function each time a new game state is pushed */
+    game$.subscribe(this.draw.bind(this));
 }
 
 /**
@@ -129,11 +130,6 @@ function init() {
     socket.on('connected', function(settings) {
         game.init(socket, settings);
     })
-
-    socket.on('move registered', function () {
-        console.log('Move registered');
-    })
-    /* =========================================== */
 }
 
 /* Make sure to start after the DOM content is fully loaded */
