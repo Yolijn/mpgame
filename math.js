@@ -54,10 +54,12 @@ class Matrix2 {
         const column = new Array(this.dimension.y).fill(null),
               row = new Array(this.dimension.x).fill(null);
 
-        // Fill each position (x) in the row with a column (y)
+        /* Fill each position (x) in the row with a column (y) */
         this.matrix = row.map((_empty, x) => {
 
-            // Fill each cell in the column with the coordinate[x,y] and the inital value
+            /* Fill each cell in the column with the coordinate[x,y]
+             * and the inital value
+             */
             return column.map((_val, y) => {
                 return {
                     coordinate: new Vector2(x, y),
@@ -65,7 +67,7 @@ class Matrix2 {
                 }
             })
         })
-        // Reduce the 2d array to an 1d array
+        /* Reduce the 2d array to an 1d array */
         .reduce((result, col) => result.concat(col), []);
     }
 
@@ -77,16 +79,17 @@ class Matrix2 {
      */
     get(coordinate) {
 
-        // Use the Vector2.match method to find the cell(s) with matching coordinates
+        /* Use the Vector2.match method to find the cell(s) with matching coordinates */
         return this.matrix.filter(item => item.coordinate.match(coordinate))
 
-            // Use only its value property
+            /* Use only its value property */
             .map(item => item.value)
 
-            // Return the value if one result is found, or undefined if none is found
-            // TODO: handle multiple results elegantly
+            /* Return the value if one result is found, or undefined if none is found */
             .reduce((result, value) => {
+
                 if (result && value) {
+                    // TODO: handle multiple results elegantly
                     throw new Error(`Unexpected: Multiple results for coordinate [${coordinate.x}, ${coordinate.y}]`);
                 }
 
@@ -103,7 +106,7 @@ class Matrix2 {
      */
     set(coordinate, value) {
 
-        // Use the Vector2.match method to find the cell(s) with matching coordinates
+        /* Use the Vector2.match method to find the cell(s) with matching coordinates */
         const result = this.matrix.filter(item => {
             return item.coordinate.match(coordinate);
         });
