@@ -136,7 +136,7 @@ function init() {
      */
     socket.on('connected', function(settings) {
         game.init(socket, settings);
-    })
+    });
 }
 
 /* Make sure to start after the DOM content is fully loaded */
