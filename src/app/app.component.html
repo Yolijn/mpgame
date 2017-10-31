@@ -1,0 +1,16 @@
+<!--The whole content below can be removed with the new code.-->
+<div style="text-align:center">
+
+  <div *ngIf="!(user.isLoggedIn | async)">
+    <h1>Welcome to Simple game!</h1>
+    <user-form></user-form>
+  </div>
+
+  <div *ngIf="user.isLoggedIn | async">
+    <h1>Good luck, {{session.userName}}!</h1>
+    <button (click)="stopGame()">Stop</button>
+    <game></game>
+  </div>
+
+</div>
+
