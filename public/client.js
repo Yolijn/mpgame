@@ -41,7 +41,14 @@ Game.prototype.init = function (socket, settings) {
         return /^Arrow(Up|Down|Left|Right)$/.test(event.key);
     });
 
-    /* Size of the cells to use in the canvas */
+    var toXY = {
+      UP:    [ 0,  1],
+      DOWN:  [ 0, -1],
+      LEFT:  [-1,  0],
+      RIGHT: [ 1,  0]
+    }
+
+    // Size of the cells to use in the canvas
     this.cellSize = {
         x: this.canvas.width / settings.gridWidth,
         y: this.canvas.height / settings.gridHeight
@@ -51,7 +58,7 @@ Game.prototype.init = function (socket, settings) {
     moveEvent$.subscribe(function(event) {
         var direction = event.key.replace(/^Arrow/, '');
 
-        socket.emit('move', direction);
+        socket.emit('move', toXY[direction]);
     });
 
     /* Call the game.draw function each time a new game state is pushed */

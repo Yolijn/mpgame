@@ -48,9 +48,9 @@ class GridGame {
      * @param {string} id
      * @param {Vector2} direction
      */
-	movePlayer(id, direction) {
+	movePlayer(id, [dirX, dirY]) {
 		const oldCoordinate = this.players[id].position;
-        const directionV2 = directionToVector2(direction);
+        const directionV2 = new Vector2(dirX, dirY);
 		const newCoordinate = Vector2.add(oldCoordinate, directionV2);
         const player = this.players[id];
 
@@ -77,41 +77,4 @@ class GridGame {
 	}
 }
 
-/**
- * Transform arrow-key string direction to Vector2
- *
- * @param {Vector2} direction
- * @return {Vector2?}
- */
-function directionToVector2(direction) {
-
-	if (direction.toUpperCase() === 'UP') {
-
-        /* Don't move on x & move 1 on y */
-		return new Vector2(0, 1);
-
-	} else if (direction.toUpperCase() === 'DOWN') {
-
-        /* Don't move on x & move -1 on y */
-		return new Vector2(0, -1);
-
-	} else if (direction.toUpperCase() === 'LEFT') {
-
-        /* Move -1 on x & don't move on y */
-		return new Vector2(-1, 0);
-
-	} else if (direction.toUpperCase() === 'RIGHT') {
-
-        /* Move 1 on x & don't move on y */
-		return new Vector2(1, 0);
-
-	} else {
-        /*
-         * Return undefined when the direction is not
-         * (case insensitive) UP, DOWN, RIGHT or LEFT
-         */
-		return;
-	}
-}
-
-module.exports = { GridGame, directionToVector2 };
+module.exports = { GridGame };
